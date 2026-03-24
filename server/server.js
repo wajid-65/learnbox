@@ -15,13 +15,13 @@ app.set('trust proxy', 1);
 
 // CORS – allow all deployed frontends + local dev
 const allowedOrigins = [
-  'https://learnbox-react.netlify.app',                // React admin (actual URL)
-  'https://jazzy-monstera-1023fe.netlify.app',         // React admin (old URL)
-  'https://learnbox-65-1.netlify.app',                 // Angular student (permanent URL)
-  'https://69c23fbcc919f2cf09668b2d--jazzy-monstera-1023fe.netlify.app', // deploy preview
-  'https://69c24465cc26b9e021bae6ec--learnbox-65-1.netlify.app',         // deploy preview
+  'https://learnbox-ype6.onrender.com',                // Render server itself (same-origin module scripts)
+  'https://learnbox-react.netlify.app',                // React admin (Netlify — kept for fallback)
+  'https://jazzy-monstera-1023fe.netlify.app',         // React admin (old Netlify URL)
+  'https://learnbox-65-1.netlify.app',                 // Angular student (old Netlify URL)
   'http://localhost:5173',                              // local React dev
   'http://localhost:4200',                              // local Angular dev
+  'http://localhost:5000',                              // local Express dev
 ];
 
 app.use(cors({
