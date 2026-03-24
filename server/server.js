@@ -15,9 +15,13 @@ const allowedOrigins = process.env.CORS_ORIGINS
   : ['http://localhost:4200', 'http://localhost:5173'];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: [
+    'https://69c23fbcc919f2cf09668b2d--jazzy-monstera-1023fe.netlify.app',   // React admin
+    'https://69c24465cc26b9e021bae6ec--learnbox-65-1.netlify.app', // Angular student
+  ],
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
