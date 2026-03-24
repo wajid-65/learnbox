@@ -92,14 +92,16 @@ const studentDist = path.join(__dirname, 'public', 'student');
 
 // React admin portal — served under /admin
 app.use('/admin', express.static(adminDist));
-app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminDist, 'index.html'));
+// SPA fallback: only catch /admin/* paths that have no file extension
+app.get(/^\/admin(\/[^.]*)?$/, (req, res) => {
+  res.sendFile('index.html', { root: adminDist });
 });
 
 // Angular student portal — served at root /
-app.use(express.static(studentDist));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(studentDist, 'index.html'));
+app.use('/', express.static(studentDist));
+// SPA fallback: only catch paths with no file extension (not .js/.css/.png etc.)
+app.get(/^\/[^.]*$/, (req, res) => {
+  res.sendFile('index.html', { root: studentDist });
 });
 
 const PORT = process.env.PORT || 5000;
