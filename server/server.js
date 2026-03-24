@@ -6,30 +6,27 @@ const path = require('path');
 const connectDB = require('./config/db');
 
 connectDB();
+
+const app = express();
+
+// CORS – allow all deployed frontends + local dev
+const allowedOrigins = [
+  'https://jazzy-monstera-1023fe.netlify.app',         // React admin (permanent URL)
+  'https://learnbox-65-1.netlify.app',                 // Angular student (permanent URL)
+  'https://69c23fbcc919f2cf09668b2d--jazzy-monstera-1023fe.netlify.app', // deploy preview
+  'https://69c24465cc26b9e021bae6ec--learnbox-65-1.netlify.app',         // deploy preview
+  'http://localhost:5173',                              // local React dev
+  'http://localhost:4200',                              // local Angular dev
+];
+
 app.use(cors({
   origin: (origin, callback) => {
-    // allow requests with no origin (e.g. Render health checks, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
     callback(new Error(`CORS blocked: ${origin}`));
   },
   credentials: true
 }));
-
-
-
-const app = express();
-
-// CORS – allow all deployed frontends + local dev
-const allowedOrigins = [
-  'https://jazzy-monstera-1023fe.netlify.app',        // React admin (permanent URL)
-  'https://learnbox-65-1.netlify.app',                // Angular student (permanent URL)
-  'https://69c23fbcc919f2cf09668b2d--jazzy-monstera-1023fe.netlify.app', // deploy preview
-  'https://69c24465cc26b9e021bae6ec--learnbox-65-1.netlify.app',         // deploy preview
-  'http://localhost:5173',                             // local React dev
-  'http://localhost:4200',                             // local Angular dev
-];
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
