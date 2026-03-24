@@ -195,7 +195,7 @@ function MaterialsPage() {
                       <td className="small">{formatDate(m.upload_date)}</td>
                       <td>
                         <div className="actions-cell">
-                          <a href={`http://localhost:5000${m.file_url}`} target="_blank" rel="noreferrer"
+                          <a href={m.file_url} target="_blank" rel="noreferrer"
                             className="btn btn-outline-secondary btn-sm">Download</a>
                           <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(m._id)}>Delete</button>
                         </div>

@@ -172,7 +172,7 @@ function QuestionPapersPage() {
                       <td className="small">{p.uploaded_by}</td>
                       <td>
                         <div className="actions-cell">
-                          <a href={`http://localhost:5000${p.file_url}`} target="_blank" rel="noreferrer"
+                          <a href={p.file_url} target="_blank" rel="noreferrer"
                             className="btn btn-outline-secondary btn-sm">Download</a>
                           <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(p._id)}>Delete</button>
                         </div>

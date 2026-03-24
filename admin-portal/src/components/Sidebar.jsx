@@ -8,7 +8,7 @@ function Sidebar() {
     try { await api.post('/logout'); } catch {}
     localStorage.removeItem('dkh_admin');
     // Use hard redirect so React fully resets — prevents stale auth state
-    window.location.replace('/login');
+    window.location.replace('/admin/login');
   };
 
   return (

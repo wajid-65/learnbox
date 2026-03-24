@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import api from '../api/axios';
 
@@ -67,28 +68,28 @@ function DashboardPage() {
         <div className="fw-semibold mb-3">Quick Actions</div>
         <div className="row g-3">
           <div className="col-md-4">
-            <a href="/materials" className="card border quick-card h-100 text-decoration-none">
+            <Link to="/materials" className="card border quick-card h-100 text-decoration-none">
               <div className="card-body">
                 <h3 className="h6 fw-semibold mb-1">Upload Study Material</h3>
                 <p className="text-muted small mb-0">Upload notes, slides, or assignments for students</p>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="col-md-4">
-            <a href="/question-papers" className="card border quick-card h-100 text-decoration-none">
+            <Link to="/question-papers" className="card border quick-card h-100 text-decoration-none">
               <div className="card-body">
                 <h3 className="h6 fw-semibold mb-1">Upload Question Paper</h3>
                 <p className="text-muted small mb-0">Add previous year exam papers to the repository</p>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="col-md-4">
-            <a href="/materials" className="card border quick-card h-100 text-decoration-none">
+            <Link to="/materials" className="card border quick-card h-100 text-decoration-none">
               <div className="card-body">
                 <h3 className="h6 fw-semibold mb-1">Manage Materials</h3>
                 <p className="text-muted small mb-0">View and delete uploaded study materials</p>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
