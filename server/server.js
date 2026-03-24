@@ -9,6 +9,10 @@ connectDB();
 
 const app = express();
 
+// Required for Render (and any reverse-proxy host): tells Express to trust
+// the X-Forwarded-* headers so secure cookies work correctly over HTTPS
+app.set('trust proxy', 1);
+
 // CORS – allow all deployed frontends + local dev
 const allowedOrigins = [
   'https://learnbox-react.netlify.app',                // React admin (actual URL)
