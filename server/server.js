@@ -36,22 +36,47 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session
-app.use(session({
+// Session config shared between both portals
+const mongoUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/department_knowledge_hub';
+const cookieConfig = {
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+  httpOnly: true,
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  secure: process.env.NODE_ENV === 'production'
+};
+
+// Admin portal session — cookie: dkh_admin_sid
+const adminSession = session({
+  name: 'dkh_admin_sid',
   secret: process.env.SESSION_SECRET || 'dkh_super_secret_2024',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/department_knowledge_hub',
-    collectionName: 'sessions'
-  }),
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production'
-  }
-}));
+  store: MongoStore.create({ mongoUrl, collectionName: 'sessions_admin' }),
+  cookie: cookieConfig
+});
+
+// Student portal session — cookie: dkh_student_sid
+const studentSession = session({
+  name: 'dkh_student_sid',
+  secret: process.env.SESSION_SECRET || 'dkh_super_secret_2024',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl, collectionName: 'sessions_student' }),
+  cookie: cookieConfig
+});
+
+// Dynamically pick session based on which portal made the request
+app.use((req, res, next) => {
+  const origin = req.headers.origin || '';
+  const isStudent =
+    origin.includes('learnbox-65') ||
+    origin.includes('learnbox-65-1') ||
+    origin.includes('4200');
+  return isStudent
+    ? studentSession(req, res, next)
+    : adminSession(req, res, next);
+});
+
 
 // Static uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
