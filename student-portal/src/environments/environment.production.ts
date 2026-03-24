@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://knowledge-hub-backend-production.up.railway.app/api',
-  backendUrl: 'https://knowledge-hub-backend-production.up.railway.app',
+  apiUrl: 'https://learnbox-ype6.onrender.com/api',
+  backendUrl: 'https://learnbox-ype6.onrender.com',
 };
