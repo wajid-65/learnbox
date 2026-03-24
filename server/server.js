@@ -6,6 +6,17 @@ const path = require('path');
 const connectDB = require('./config/db');
 
 connectDB();
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (e.g. Render health checks, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true
+}));
+
+
 
 const app = express();
 
@@ -18,16 +29,6 @@ const allowedOrigins = [
   'http://localhost:5173',                             // local React dev
   'http://localhost:4200',                             // local Angular dev
 ];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    // allow requests with no origin (e.g. Render health checks, curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked: ${origin}`));
-  },
-  credentials: true
-}));
 
 
 app.use(express.json());
