@@ -76,7 +76,7 @@ function LoginPage() {
               New admin? <Link to="/register">Create an account</Link>
             </p>
             <p className="text-center small text-muted mb-0">
-              Students: <a href="http://localhost:4200">Student Portal</a>
+              Students: <a href="https://learnbox-65-1.netlify.app" target="_blank">Student Portal</a>
             </p>
           </div>
         </div>

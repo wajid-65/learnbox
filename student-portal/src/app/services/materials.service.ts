@@ -20,11 +20,12 @@ export class MaterialsService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`, { withCredentials: true });
+    // _t timestamp busts the browser cache — always fetches fresh data
+    return this.http.get(`${this.apiUrl}?_t=${Date.now()}`, { withCredentials: true });
   }
 
   search(query: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/search?query=${encodeURIComponent(query)}`, { withCredentials: true });
+    return this.http.get(`${this.apiUrl}/search?query=${encodeURIComponent(query)}&_t=${Date.now()}`, { withCredentials: true });
   }
 
   getDownloadUrl(file_url: string): string {
