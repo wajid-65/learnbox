@@ -1,0 +1,104 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f3f4f6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+/* Sidebar fixed layout */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  background: #fff;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  padding: 1.75rem;
+  min-height: 100vh;
+}
+
+/* Nav active state */
+.sidebar .nav-link.active {
+  background: #eff6ff;
+  color: #1d4ed8 !important;
+  border-left: 3px solid #1d4ed8;
+  font-weight: 600;
+}
+.sidebar .nav-link {
+  color: #374151;
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+}
+.sidebar .nav-link:hover { background: #f3f4f6; color: #111827 !important; }
+
+/* User avatar circle */
+.user-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem; font-weight: 700; flex-shrink: 0;
+}
+
+/* Portal badge on login */
+.portal-badge {
+  display: inline-block;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+/* Stat cards clickable */
+.stat-card { cursor: default; }
+
+/* Quick action cards */
+.quick-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.quick-card:hover {
+  border-color: #2563eb !important;
+  box-shadow: 0 1px 6px rgba(37,99,235,0.1);
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Table row number */
+.row-num { color: #9ca3af; width: 40px; }
+
+/* Actions cell inline */
+.actions-cell { display: flex; gap: 0.5rem; align-items: center; }
+
+/* Spinner */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

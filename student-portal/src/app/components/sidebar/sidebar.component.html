@@ -1,0 +1,33 @@
+<nav class="sidebar">
+  <div class="p-3 border-bottom">
+    <div class="fw-bold" style="font-size: 0.95rem; color: #111827;">Knowledge Hub</div>
+    <div class="text-muted" style="font-size: 0.72rem;">Student Portal</div>
+  </div>
+
+  <div class="d-flex align-items-center gap-2 p-3 border-bottom bg-light" *ngIf="user">
+    <div class="user-avatar">{{ user.name[0].toUpperCase() }}</div>
+    <div class="overflow-hidden">
+      <div class="fw-semibold text-truncate" style="font-size: 0.82rem; color: #111827;">{{ user.name }}</div>
+      <div class="text-muted" style="font-size: 0.72rem;">{{ user.department }}</div>
+    </div>
+  </div>
+
+  <ul class="nav flex-column flex-grow-1 py-2">
+    <li class="nav-item">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/materials" routerLinkActive="active" class="nav-link">Study Materials</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/question-papers" routerLinkActive="active" class="nav-link">Question Papers</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/search" routerLinkActive="active" class="nav-link">Search</a>
+    </li>
+  </ul>
+
+  <div class="p-3 border-top">
+    <button class="btn btn-outline-danger btn-sm w-100" (click)="logout()">Logout</button>
+  </div>
+</nav>

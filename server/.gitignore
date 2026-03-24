@@ -1,0 +1,26 @@
+# ============================================================
+#  Server .gitignore
+# ============================================================
+
+# Dependencies
+node_modules/
+
+# Environment variables – NEVER commit real credentials
+.env
+.env.local
+
+# Uploaded files – stored on server's disk, not in repo
+uploads/materials/*
+uploads/questionpapers/*
+# Keep folder structure via .gitkeep
+!uploads/materials/.gitkeep
+!uploads/questionpapers/.gitkeep
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

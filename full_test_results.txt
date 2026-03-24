@@ -1,0 +1,88 @@
+﻿
+ΓòöΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòù
+Γòæ   LearnBox ΓÇô Full Pre-Deployment Functionality Test  Γòæ
+ΓòÜΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓò¥
+
+ΓöÇΓöÇ Section 1: Backend Health ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Backend Health Check
+        ΓåÆ Department Knowledge Hub API is running
+
+ΓöÇΓöÇ Section 2: Authentication ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Login ΓÇô Empty Fields Validation
+        ΓåÆ 400 ΓÇô Please provide User ID, Name and Password
+Γ£à [PASS] Login ΓÇô Wrong Credentials Rejected
+        ΓåÆ 401 ΓÇô Invalid credentials
+Γ£à [PASS] Admin Login (ADM001)
+        ΓåÆ Logged in as "Dr. Robert Smith" [role: admin]
+Γ£à [PASS] Student Login (STU001)
+        ΓåÆ Logged in as "Alice Johnson" [role: student]
+Γ£à [PASS] Session Persistence (GET /me)
+        ΓåÆ user_id=ADM001, role=admin
+Γ£à [PASS] Unauthenticated Access Blocked
+        ΓåÆ 401 ΓÇô Not authenticated
+
+ΓöÇΓöÇ Section 3: Study Materials ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Test PDF File
+        ΓåÆ Found at D:\learnbox\test_sample.pdf (582 bytes)
+Γ£à [PASS] Student Cannot Upload Material
+        ΓåÆ 403 ΓÇô Access denied
+Γ£à [PASS] Admin Upload Study Material
+        ΓåÆ Created: "Mathematics Notes - Semester 3" | file: /uploads/materials/1774082782322-122320166.pdf
+Γ£à [PASS] Material Appears in List
+        ΓåÆ Found "Mathematics Notes - Semester 3" | subject: Mathematics | semester: 3
+Γ£à [PASS] Search Study Materials
+        ΓåÆ Search "Mathematics" found 1 result(s)
+Γ£à [PASS] Download Study Material File
+        ΓåÆ File served at /uploads/materials/1774082782322-122320166.pdf ΓÇô Content-Type: application/pdf
+Γ£à [PASS] Material File Saved on Disk
+        ΓåÆ File exists at: D:\learnbox\server\uploads\materials\1774082782322-122320166.pdf
+
+ΓöÇΓöÇ Section 4: Question Papers ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Student Cannot Upload QP
+        ΓåÆ 403 ΓÇô Access denied
+Γ£à [PASS] Admin Upload Question Paper
+        ΓåÆ Created: Subject="Mathematics" Year=2024 | file: /uploads/questionpapers/1774082782461-13330441.pdf
+Γ£à [PASS] QP Appears in List
+        ΓåÆ Found Subject="Mathematics" Year=2024 Semester=3
+Γ£à [PASS] Search Question Papers
+        ΓåÆ Search "Mathematics" found 1 result(s)
+Γ£à [PASS] Download Question Paper File
+        ΓåÆ File served at /uploads/questionpapers/1774082782461-13330441.pdf ΓÇô Content-Type: application/pdf
+Γ£à [PASS] QP File Saved on Disk
+        ΓåÆ File exists at: D:\learnbox\server\uploads\questionpapers\1774082782461-13330441.pdf
+
+ΓöÇΓöÇ Section 5: Delete Operations ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Student Cannot Delete Material
+        ΓåÆ 403 ΓÇô Access denied
+Γ£à [PASS] Admin Delete Material
+        ΓåÆ Material deleted
+Γ£à [PASS] Material Removed from List
+        ΓåÆ Material no longer appears in list
+Γ£à [PASS] Admin Delete Question Paper
+        ΓåÆ Question paper deleted
+Γ£à [PASS] QP Removed from List
+        ΓåÆ QP no longer appears in list
+
+ΓöÇΓöÇ Section 6: Registration ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Register New Student
+        ΓåÆ Created: Test Student [student]
+Γ£à [PASS] Login with New Account
+        ΓåÆ New student can log in immediately after registration
+
+ΓöÇΓöÇ Section 7: Logout ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γ£à [PASS] Admin Logout
+        ΓåÆ Logged out
+Γ£à [PASS] Session Destroyed After Logout
+        ΓåÆ 401 ΓÇô Session invalidated correctly
+Γ£à [PASS] Student Logout
+        ΓåÆ Logged out
+
+ΓòöΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòù
+Γòæ                   TEST SUMMARY                      Γòæ
+ΓòáΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòú
+Γòæ  Γ£à PASS: 30  / 30                                   Γòæ
+Γòæ  Γ¥î FAIL: 0   / 30                                   Γòæ
+Γòæ  ΓÜá∩╕Å  WARN: 0   / 30                                   Γòæ
+ΓòÜΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓò¥
+
+≡ƒÄë All tests passed! Application is ready for deployment.

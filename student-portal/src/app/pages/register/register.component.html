@@ -1,0 +1,74 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
+  <div style="width: 100%; max-width: 480px;" class="px-3">
+    <div class="text-center mb-4">
+      <h1 class="h4 fw-bold mb-1">Create Student Account</h1>
+      <p class="text-muted small mb-0">CS Department — Student Portal</p>
+    </div>
+
+    <div class="card border shadow-sm">
+      <div class="card-body p-4">
+        <div class="portal-badge">Student Registration</div>
+
+        <div class="alert alert-danger py-2 small" *ngIf="error">{{ error }}</div>
+        <div class="alert alert-success py-2 small" *ngIf="success">{{ success }}</div>
+
+        <form (ngSubmit)="onRegister()" #regForm="ngForm">
+          <div class="row g-3 mb-0">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Student ID</label>
+                <input id="reg-student-id" class="form-control" type="text"
+                  [(ngModel)]="user_id" name="user_id"
+                  placeholder="Choose a unique ID e.g. STU2024" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Full Name</label>
+                <input id="reg-student-name" class="form-control" type="text"
+                  [(ngModel)]="name" name="name"
+                  placeholder="e.g. Alice Johnson" autocomplete="name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Department</label>
+            <select id="reg-student-dept" class="form-select"
+              [(ngModel)]="department" name="department">
+              <option value="">Select your Department</option>
+              <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+
+          <div class="row g-3 mb-0">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Password</label>
+                <input id="reg-student-password" class="form-control" type="password"
+                  [(ngModel)]="password" name="password"
+                  placeholder="Min. 6 characters" autocomplete="new-password" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold small">Confirm Password</label>
+                <input id="reg-student-confirm" class="form-control" type="password"
+                  [(ngModel)]="confirm_password" name="confirm_password"
+                  placeholder="Re-enter password" autocomplete="new-password" />
+              </div>
+            </div>
+          </div>
+
+          <button id="reg-student-btn" type="submit" class="btn btn-primary w-100 mt-1" [disabled]="loading">
+            {{ loading ? 'Creating Account...' : 'Create Account' }}
+          </button>
+        </form>
+
+        <p class="text-center small text-muted mt-3 mb-0">
+          Already have an account? <a routerLink="/login">Sign in here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

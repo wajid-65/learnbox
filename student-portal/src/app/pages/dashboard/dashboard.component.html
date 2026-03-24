@@ -1,0 +1,74 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-start mb-4">
+      <div>
+        <h1 class="h5 fw-bold mb-1">{{ greeting }}, {{ user?.name }}</h1>
+        <p class="text-muted small mb-0">Welcome to the CS Department Knowledge Hub</p>
+      </div>
+      <span class="badge text-bg-primary fs-6 fw-normal">{{ user?.department }}</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card border h-100 quick-card" (click)="navigate('materials')">
+          <div class="card-body">
+            <div class="text-muted text-uppercase fw-semibold mb-1" style="font-size: 0.72rem; letter-spacing: 0.04em;">Study Materials</div>
+            <h3 class="fw-bold mb-1">{{ materialsCount }}</h3>
+            <p class="text-muted small mb-0">Available to download</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border h-100 quick-card" (click)="navigate('question-papers')">
+          <div class="card-body">
+            <div class="text-muted text-uppercase fw-semibold mb-1" style="font-size: 0.72rem; letter-spacing: 0.04em;">Question Papers</div>
+            <h3 class="fw-bold mb-1">{{ papersCount }}</h3>
+            <p class="text-muted small mb-0">Previous year papers</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border h-100 quick-card" (click)="navigate('search')">
+          <div class="card-body">
+            <div class="text-muted text-uppercase fw-semibold mb-1" style="font-size: 0.72rem; letter-spacing: 0.04em;">Search</div>
+            <h3 class="fw-bold mb-1">Find</h3>
+            <p class="text-muted small mb-0">Materials and papers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Access -->
+    <div class="fw-semibold mb-3">Quick Access</div>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card border quick-card h-100" (click)="navigate('materials')">
+          <div class="card-body">
+            <h3 class="h6 fw-semibold mb-1">Study Materials</h3>
+            <p class="text-muted small mb-0">Access notes, slides, and documents uploaded by your faculty</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border quick-card h-100" (click)="navigate('question-papers')">
+          <div class="card-body">
+            <h3 class="h6 fw-semibold mb-1">Question Papers</h3>
+            <p class="text-muted small mb-0">Browse previous year exam papers for all subjects</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border quick-card h-100" (click)="navigate('search')">
+          <div class="card-body">
+            <h3 class="h6 fw-semibold mb-1">Search</h3>
+            <p class="text-muted small mb-0">Find any material or question paper instantly by keyword</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

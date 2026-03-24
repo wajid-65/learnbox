@@ -1,0 +1,51 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
+  <div style="width: 100%; max-width: 420px;" class="px-3">
+    <div class="text-center mb-4">
+      <h1 class="h4 fw-bold mb-1">Knowledge Hub</h1>
+      <p class="text-muted small mb-0">CS Department — Student Portal</p>
+    </div>
+
+    <div class="card border shadow-sm">
+      <div class="card-body p-4">
+        <div class="portal-badge">Student Login</div>
+
+        <div class="alert alert-danger py-2 small" *ngIf="error">{{ error }}</div>
+
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Student ID</label>
+            <input id="student-user-id" class="form-control" type="text"
+              [(ngModel)]="user_id" name="user_id"
+              placeholder="Your registered Student ID" autocomplete="username" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Full Name</label>
+            <input id="student-name" class="form-control" type="text"
+              [(ngModel)]="name" name="name"
+              placeholder="Your registered full name" autocomplete="name" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Password</label>
+            <input id="student-password" class="form-control" type="password"
+              [(ngModel)]="password" name="password"
+              placeholder="Your password" autocomplete="current-password" />
+          </div>
+
+          <button id="student-login-btn" type="submit" class="btn btn-primary w-100 mt-1" [disabled]="loading">
+            {{ loading ? 'Signing in...' : 'Sign In' }}
+          </button>
+        </form>
+
+        <hr class="my-3" />
+        <p class="text-center small text-muted mb-1">
+          New student? <a routerLink="/register">Create an account</a>
+        </p>
+        <p class="text-center small text-muted mb-0">
+          Faculty/Admin? <a href="http://localhost:5173" target="_blank">Use the Admin Portal</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

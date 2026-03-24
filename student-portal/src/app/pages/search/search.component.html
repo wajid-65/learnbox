@@ -1,0 +1,116 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    <!-- Header -->
+    <div class="mb-4">
+      <h1 class="h5 fw-bold mb-1">Search</h1>
+      <p class="text-muted small mb-0">Search across all study materials and question papers</p>
+    </div>
+
+    <!-- Search Input -->
+    <div class="card border mb-4">
+      <div class="card-body py-3 d-flex justify-content-center">
+        <div class="input-group" style="max-width: 560px;">
+          <input type="text" class="form-control"
+            [(ngModel)]="searchQuery"
+            (keydown.enter)="onSearch()"
+            placeholder="Search materials, subjects, question papers..."
+            id="global-search" />
+          <button class="btn btn-primary" (click)="onSearch()">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="d-flex align-items-center gap-2 text-muted small mb-3">
+      <div class="spinner-border-custom"></div>
+      <span>Searching...</span>
+    </div>
+
+    <!-- Prompt -->
+    <div *ngIf="!searched && !loading" class="card border text-center text-muted small p-5">
+      Enter a keyword above to search across all resources.
+    </div>
+
+    <ng-container *ngIf="searched && !loading">
+
+      <!-- Study Materials Results -->
+      <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="fw-semibold small">Study Materials</div>
+          <span class="badge text-bg-secondary">{{ materials.length }} results</span>
+        </div>
+
+        <div class="card border" *ngIf="materials.length > 0; else noMaterials">
+          <div class="table-responsive">
+            <table class="table table-hover table-sm mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="text-muted" style="font-size: 0.72rem;">#</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">TITLE</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">SUBJECT</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">SEMESTER</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let m of materials; let i = index">
+                  <td class="row-num small">{{ i + 1 }}</td>
+                  <td class="small">{{ m.title }}</td>
+                  <td><span class="badge text-bg-primary">{{ m.subject }}</span></td>
+                  <td><span class="badge text-bg-secondary">Sem {{ m.semester }}</span></td>
+                  <td><button class="btn btn-outline-secondary btn-sm" (click)="downloadMaterial(m.file_url, m.title)">Download</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ng-template #noMaterials>
+          <div class="card border text-center text-muted small p-4">
+            No materials found for "{{ searchQuery }}".
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Question Papers Results -->
+      <div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="fw-semibold small">Question Papers</div>
+          <span class="badge text-bg-secondary">{{ papers.length }} results</span>
+        </div>
+
+        <div class="card border" *ngIf="papers.length > 0; else noPapers">
+          <div class="table-responsive">
+            <table class="table table-hover table-sm mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="text-muted" style="font-size: 0.72rem;">#</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">SUBJECT</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">YEAR</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">SEMESTER</th>
+                  <th class="text-muted" style="font-size: 0.72rem;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of papers; let i = index">
+                  <td class="row-num small">{{ i + 1 }}</td>
+                  <td class="small">{{ p.subject }}</td>
+                  <td><span class="badge text-bg-success">{{ p.year }}</span></td>
+                  <td><span class="badge text-bg-secondary">Sem {{ p.semester }}</span></td>
+                  <td><button class="btn btn-outline-secondary btn-sm" (click)="downloadPaper(p.file_url, p.subject)">Download</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ng-template #noPapers>
+          <div class="card border text-center text-muted small p-4">
+            No question papers found for "{{ searchQuery }}".
+          </div>
+        </ng-template>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

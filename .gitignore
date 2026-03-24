@@ -1,0 +1,63 @@
+# ============================================================
+#  LearnBox – Root .gitignore
+# ============================================================
+
+# ----- Node / npm -----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ----- Environment / Secrets -----
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# Keep .env.example and .env.production (template files) – they can be committed
+
+# ----- Build outputs -----
+dist/
+dist-ssr/
+out-tsc/
+build/
+
+# ----- Uploaded files (kept locally, not in repo) -----
+server/uploads/materials/*
+server/uploads/questionpapers/*
+# But keep the placeholder files so the folders are tracked
+!server/uploads/materials/.gitkeep
+!server/uploads/questionpapers/.gitkeep
+
+# ----- Angular cache -----
+.angular/
+
+# ----- Test / scratch files -----
+test_api.js
+test_output*.txt
+test_results.txt
+*.local.txt
+
+# ----- OS files -----
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ----- Editor files -----
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+
+# ----- Logs -----
+logs/
+*.log

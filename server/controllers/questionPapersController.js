@@ -1,0 +1,76 @@
+const QuestionPaper = require('../models/QuestionPaper');
+const fs = require('fs');
+const path = require('path');
+
+// GET /api/questionpapers
+const getQuestionPapers = async (req, res) => {
+  try {
+    const papers = await QuestionPaper.find().sort({ year: -1 });
+    res.json({ success: true, data: papers });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// GET /api/questionpapers/search?query=
+const searchQuestionPapers = async (req, res) => {
+  const { query } = req.query;
+  if (!query) return res.json({ success: true, data: [] });
+  try {
+    const regex = new RegExp(query, 'i');
+    const papers = await QuestionPaper.find({
+      $or: [{ subject: regex }, { year: regex }, { semester: regex }]
+    }).sort({ year: -1 });
+    res.json({ success: true, data: papers });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// POST /api/questionpapers (admin only)
+const uploadQuestionPaper = async (req, res) => {
+  try {
+    if (!req.session.user || req.session.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const { subject, year, semester } = req.body;
+    if (!subject || !year || !semester) {
+      return res.status(400).json({ message: 'Subject, year and semester are required' });
+    }
+    const paper = await QuestionPaper.create({
+      subject,
+      year,
+      semester,
+      file_url:    `/uploads/questionpapers/${req.file.filename}`,
+      uploaded_by: req.session.user.name
+    });
+    res.status(201).json({ success: true, data: paper });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// DELETE /api/questionpapers/:id (admin only)
+const deleteQuestionPaper = async (req, res) => {
+  try {
+    if (!req.session.user || req.session.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+    const paper = await QuestionPaper.findById(req.params.id);
+    if (!paper) return res.status(404).json({ message: 'Question paper not found' });
+
+    // Delete file from disk
+    const filePath = path.join(__dirname, '..', paper.file_url);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+    await paper.deleteOne();
+    res.json({ success: true, message: 'Question paper deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { getQuestionPapers, searchQuestionPapers, uploadQuestionPaper, deleteQuestionPaper };
