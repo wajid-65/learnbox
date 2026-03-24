@@ -11,7 +11,8 @@ const app = express();
 
 // CORS – allow all deployed frontends + local dev
 const allowedOrigins = [
-  'https://jazzy-monstera-1023fe.netlify.app',         // React admin (permanent URL)
+  'https://learnbox-react.netlify.app',                // React admin (actual URL)
+  'https://jazzy-monstera-1023fe.netlify.app',         // React admin (old URL)
   'https://learnbox-65-1.netlify.app',                 // Angular student (permanent URL)
   'https://69c23fbcc919f2cf09668b2d--jazzy-monstera-1023fe.netlify.app', // deploy preview
   'https://69c24465cc26b9e021bae6ec--learnbox-65-1.netlify.app',         // deploy preview
