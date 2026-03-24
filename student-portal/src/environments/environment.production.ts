@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://learnbox-ype6.onrender.com/api',
-  backendUrl: 'https://learnbox-ype6.onrender.com',
+  apiUrl: '/api',   // same-origin — no CORS needed
+  backendUrl: '',   // empty = same origin as the page
 };

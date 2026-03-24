@@ -78,16 +78,29 @@ app.use((req, res, next) => {
 });
 
 
-// Static uploads
+// ── Uploaded files ────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
+// ── API routes ────────────────────────────────────────────────
 app.use('/api', require('./routes/auth'));
 app.use('/api/materials', require('./routes/materials'));
 app.use('/api/questionpapers', require('./routes/questionpapers'));
 
-// Health check
-app.get('/', (req, res) => res.json({ message: 'Department Knowledge Hub API is running' }));
+// ── Serve built static portals ────────────────────────────────
+const adminDist   = path.join(__dirname, 'public', 'admin');
+const studentDist = path.join(__dirname, 'public', 'student');
+
+// React admin portal — served under /admin
+app.use('/admin', express.static(adminDist));
+app.get('/admin/*', (req, res) => {
+  res.sendFile(path.join(adminDist, 'index.html'));
+});
+
+// Angular student portal — served at root /
+app.use(express.static(studentDist));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(studentDist, 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
