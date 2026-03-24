@@ -28,12 +28,14 @@ function copyDir(src, dest) {
 run('npm install', path.join(root, 'server'));
 
 // ── Build React admin portal ───────────────────────────────────
-run('npm install', path.join(root, 'admin-portal'));
+// --include=dev ensures vite is installed even when NODE_ENV=production
+run('npm install --include=dev', path.join(root, 'admin-portal'));
 run('npm run build', path.join(root, 'admin-portal'));
 copyDir(path.join(root, 'admin-portal', 'dist'), adminDest);
 
 // ── Build Angular student portal ───────────────────────────────
-run('npm install', path.join(root, 'student-portal'));
+// --include=dev ensures @angular/cli is installed even when NODE_ENV=production
+run('npm install --include=dev', path.join(root, 'student-portal'));
 run('npm run build', path.join(root, 'student-portal'));
 copyDir(
   path.join(root, 'student-portal', 'dist', 'student-portal', 'browser'),
