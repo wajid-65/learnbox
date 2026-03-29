@@ -1,6 +1,7 @@
 const QuestionPaper = require('../models/QuestionPaper');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
 // GET /api/questionpapers
 const getQuestionPapers = async (req, res) => {
@@ -40,6 +41,21 @@ const uploadQuestionPaper = async (req, res) => {
     if (!subject || !year || !semester) {
       return res.status(400).json({ message: 'Subject, year and semester are required' });
     }
+
+    // Upload temporary multer file to GridFS
+    await new Promise((resolve, reject) => {
+      const db = mongoose.connection.db;
+      const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
+      const uploadStream = bucket.openUploadStream(req.file.filename);
+      fs.createReadStream(req.file.path)
+        .pipe(uploadStream)
+        .on('error', reject)
+        .on('finish', resolve);
+    });
+
+    // Remove the temporary file from local disk
+    if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+
     const paper = await QuestionPaper.create({
       subject,
       year,
@@ -62,9 +78,14 @@ const deleteQuestionPaper = async (req, res) => {
     const paper = await QuestionPaper.findById(req.params.id);
     if (!paper) return res.status(404).json({ message: 'Question paper not found' });
 
-    // Delete file from disk
-    const filePath = path.join(__dirname, '..', paper.file_url);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Delete file from GridFS instead of disk
+    const filename = paper.file_url.split('/').pop();
+    const db = mongoose.connection.db;
+    const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
+    const files = await bucket.find({ filename }).toArray();
+    if (files.length > 0) {
+      await bucket.delete(files[0]._id);
+    }
 
     await paper.deleteOne();
     res.json({ success: true, message: 'Question paper deleted' });

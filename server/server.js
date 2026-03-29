@@ -78,8 +78,40 @@ app.use((req, res, next) => {
 });
 
 
-// ── Uploaded files ────────────────────────────────────────────
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// ── Uploaded files (served from GridFS) ─────────────────────
+const mongoose = require('mongoose');
+
+app.get('/uploads/:type/:filename', async (req, res) => {
+  try {
+    const db = mongoose.connection.db;
+    if (!db) return res.status(500).json({ message: 'Database not connected' });
+    
+    const bucket = new mongoose.mongo.GridFSBucket(db, {
+      bucketName: 'uploads'
+    });
+
+    const files = await bucket.find({ filename: req.params.filename }).toArray();
+    if (!files || files.length === 0) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+
+    const file = files[0];
+    
+    let contentType = 'application/octet-stream';
+    if (file.filename.endsWith('.pdf')) contentType = 'application/pdf';
+    else if (file.filename.endsWith('.doc')) contentType = 'application/msword';
+    else if (file.filename.endsWith('.docx')) contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    else if (file.filename.endsWith('.ppt')) contentType = 'application/vnd.ms-powerpoint';
+    else if (file.filename.endsWith('.pptx')) contentType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+
+    res.set('Content-Type', contentType);
+    
+    const downloadStream = bucket.openDownloadStream(file._id);
+    downloadStream.pipe(res);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving file', error: err.message });
+  }
+});
 
 // ── API routes ────────────────────────────────────────────────
 app.use('/api', require('./routes/auth'));

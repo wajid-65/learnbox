@@ -1,6 +1,7 @@
 const Material = require('../models/Material');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
 // @route GET /api/materials
 const getMaterials = async (req, res) => {
@@ -47,6 +48,20 @@ const uploadMaterial = async (req, res) => {
     if (!title || !subject || !semester) {
       return res.status(400).json({ message: 'Title, subject and semester are required' });
     }
+
+    // Upload temporary multer file to GridFS
+    await new Promise((resolve, reject) => {
+      const db = mongoose.connection.db;
+      const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
+      const uploadStream = bucket.openUploadStream(req.file.filename);
+      fs.createReadStream(req.file.path)
+        .pipe(uploadStream)
+        .on('error', reject)
+        .on('finish', resolve);
+    });
+
+    // Remove the temporary file from local disk
+    if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
 
     const material = await Material.create({
       title,
@@ -99,9 +114,14 @@ const deleteMaterial = async (req, res) => {
     const material = await Material.findById(req.params.id);
     if (!material) return res.status(404).json({ message: 'Material not found' });
 
-    // Delete file from disk
-    const filePath = path.join(__dirname, '..', material.file_url);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Delete file from GridFS instead of disk
+    const filename = material.file_url.split('/').pop();
+    const db = mongoose.connection.db;
+    const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: 'uploads' });
+    const files = await bucket.find({ filename }).toArray();
+    if (files.length > 0) {
+      await bucket.delete(files[0]._id);
+    }
 
     await material.deleteOne();
     res.json({ success: true, message: 'Material deleted' });
