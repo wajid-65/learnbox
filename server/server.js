@@ -105,6 +105,7 @@ app.get('/uploads/:type/:filename', async (req, res) => {
     else if (file.filename.endsWith('.pptx')) contentType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
 
     res.set('Content-Type', contentType);
+    res.set('Content-Disposition', `attachment; filename="${file.filename}"`);
     
     const downloadStream = bucket.openDownloadStream(file._id);
     downloadStream.pipe(res);
