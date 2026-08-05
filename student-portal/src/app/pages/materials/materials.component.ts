@@ -57,9 +57,12 @@ export class MaterialsComponent implements OnInit {
 
   download(file_url: string, title: string): void {
     const url = this.materialsService.getDownloadUrl(file_url);
+    const ext = file_url.includes('.') ? file_url.substring(file_url.lastIndexOf('.')) : '';
+    const filename = title.endsWith(ext) ? title : `${title}${ext}`;
+    
     const a = document.createElement('a');
     a.href = url;
-    a.download = title;
+    a.download = filename;
     a.target = '_blank';
     a.click();
   }

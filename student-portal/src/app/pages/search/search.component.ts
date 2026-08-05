@@ -54,17 +54,23 @@ export class SearchComponent {
   }
 
   downloadMaterial(file_url: string, title: string): void {
+    const ext = file_url.includes('.') ? file_url.substring(file_url.lastIndexOf('.')) : '';
+    const filename = title.endsWith(ext) ? title : `${title}${ext}`;
+    
     const a = document.createElement('a');
     a.href = this.materialsService.getDownloadUrl(file_url);
-    a.download = title;
+    a.download = filename;
     a.target = '_blank';
     a.click();
   }
 
   downloadPaper(file_url: string, subject: string): void {
+    const ext = file_url.includes('.') ? file_url.substring(file_url.lastIndexOf('.')) : '';
+    const filename = subject.endsWith(ext) ? subject : `${subject}${ext}`;
+
     const a = document.createElement('a');
     a.href = this.qpService.getDownloadUrl(file_url);
-    a.download = subject;
+    a.download = filename;
     a.target = '_blank';
     a.click();
   }

@@ -70,9 +70,12 @@ export class QuestionPapersComponent implements OnInit, OnDestroy {
 
   download(file_url: string, subject: string): void {
     const url = this.qpService.getDownloadUrl(file_url);
+    const ext = file_url.includes('.') ? file_url.substring(file_url.lastIndexOf('.')) : '';
+    const filename = subject.endsWith(ext) ? subject : `${subject}${ext}`;
+
     const a = document.createElement('a');
     a.href = url;
-    a.download = subject;
+    a.download = filename;
     a.target = '_blank';
     a.click();
   }
