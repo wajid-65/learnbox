@@ -15,6 +15,7 @@ app.set('trust proxy', 1);
 
 // CORS – allow all deployed frontends + local dev
 const allowedOrigins = [
+  'https://learnbox-server.onrender.com',              // Render server (current domain)
   'https://learnbox-ype6.onrender.com',                // Render server itself (same-origin module scripts)
   'https://learnbox-react.netlify.app',                // React admin (Netlify — kept for fallback)
   'https://jazzy-monstera-1023fe.netlify.app',         // React admin (old Netlify URL)
@@ -68,10 +69,15 @@ const studentSession = session({
 // Dynamically pick session based on which portal made the request
 app.use((req, res, next) => {
   const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  
   const isStudent =
     origin.includes('learnbox-65') ||
     origin.includes('learnbox-65-1') ||
-    origin.includes('4200');
+    origin.includes('4200') ||
+    (origin.includes('learnbox-server.onrender.com') && !referer.includes('/admin')) ||
+    (!origin && referer && !referer.includes('/admin'));
+
   return isStudent
     ? studentSession(req, res, next)
     : adminSession(req, res, next);
