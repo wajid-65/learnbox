@@ -1,0 +1,12 @@
+{
+  "name": "learnbox",
+  "version": "1.0.0",
+  "description": "Root package for LearnBox Department Knowledge Hub",
+  "scripts": {
+    "build": "node build.cjs",
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
